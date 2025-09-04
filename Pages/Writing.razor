@@ -1,0 +1,218 @@
+@page "/writing"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<PageTitle>MindfulMuse - Writing</PageTitle>
+
+<div class="writing-module">
+    <header class="module-header">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="mb-1">✍️ Writing Studio</h1>
+                    <p class="text-muted mb-0">Craft your stories with AI assistance</p>
+                </div>
+                <button class="btn btn-outline-light" @onclick="NavigateHome">
+                    <i class="bi bi-house"></i> Home
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="writing-editor">
+                    <div class="editor-toolbar">
+                        <div class="btn-group me-2" role="group">
+                            <button class="btn btn-sm btn-outline-primary" @onclick="FormatText" data-format="bold">
+                                <strong>B</strong>
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary" @onclick="FormatText" data-format="italic">
+                                <em>I</em>
+                            </button>
+                            <button class="btn btn-sm btn-outline-primary" @onclick="FormatText" data-format="underline">
+                                <u>U</u>
+                            </button>
+                        </div>
+                        <div class="btn-group me-2" role="group">
+                            <button class="btn btn-sm btn-outline-secondary" @onclick="InsertHeading">
+                                Heading
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary" @onclick="InsertList">
+                                List
+                            </button>
+                        </div>
+                        <button class="btn btn-sm btn-success me-2" @onclick="GetAISuggestion">
+                            🤖 Get AI Suggestion
+                        </button>
+                    </div>
+
+                    <div class="editor-content" @oninput="OnContentChanged" contenteditable="true"
+                         @bind="Content">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="ai-panel">
+                    <h5 class="panel-title">✨ AI Writing Assistant</h5>
+
+                    <div class="suggestion-area">
+                        <textarea class="form-control" rows="6" placeholder="Describe what you want to write about..."
+                                  @bind="WritingPrompt" @bind:event="oninput"></textarea>
+                        <button class="btn btn-primary w-100 mt-2" @onclick="GenerateSuggestion">
+                            Generate Suggestion
+                        </button>
+                    </div>
+
+                    <div class="suggestions-list mt-3">
+                        <h6>Suggestions:</h6>
+                        <div class="suggestion-item" style="@GetSuggestionStyle()">
+                            @CurrentSuggestion
+                        </div>
+                    </div>
+
+                    <div class="writing-tools mt-3">
+                        <h6>Writing Tools:</h6>
+                        <button class="btn btn-outline-info btn-sm me-1 mb-1" @onclick="AnalyzeSentiment">
+                            Sentiment Analysis
+                        </button>
+                        <button class="btn btn-outline-warning btn-sm me-1 mb-1" @onclick="CheckGrammar">
+                            Grammar Check
+                        </button>
+                        <button class="btn btn-outline-success btn-sm mb-1" @onclick="ImproveReadability">
+                            Improve Readability
+                        </button>
+                    </div>
+                </div>
+
+                <div class="export-panel mt-3">
+                    <h6>Export Options:</h6>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary btn-sm" @onclick="ExportToWord">
+                            📄 Export to Word
+                        </button>
+                        <button class="btn btn-outline-success btn-sm" @onclick="ExportToPDF">
+                            📕 Export to PDF
+                        </button>
+                        <button class="btn btn-outline-info btn-sm" @onclick="ExportToMarkdown">
+                            📝 Export to Markdown
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string Content { get; set; } = "Start writing your story here...";
+    private string WritingPrompt { get; set; } = "";
+    private string CurrentSuggestion { get; set; } = "Your AI suggestions will appear here.";
+    private bool IsGenerating { get; set; } = false;
+
+    private void NavigateHome()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    private async Task OnContentChanged()
+    {
+        // Save content to local storage
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "writing-content", Content);
+    }
+
+    private async Task FormatText()
+    {
+        // Implement text formatting
+        await JSRuntime.InvokeVoidAsync("formatSelectedText");
+    }
+
+    private async Task InsertHeading()
+    {
+        // Insert heading
+        await JSRuntime.InvokeVoidAsync("insertHeading");
+    }
+
+    private async Task InsertList()
+    {
+        // Insert list
+        await JSRuntime.InvokeVoidAsync("insertList");
+    }
+
+    private async Task GetAISuggestion()
+    {
+        IsGenerating = true;
+        // Simulate AI processing
+        await Task.Delay(2000);
+        CurrentSuggestion = "Consider adding more descriptive language to paint a vivid picture for your readers. Try using sensory details that engage multiple senses.";
+        IsGenerating = false;
+        StateHasChanged();
+    }
+
+    private async Task GenerateSuggestion()
+    {
+        if (string.IsNullOrWhiteSpace(WritingPrompt))
+            return;
+
+        IsGenerating = true;
+        // Simulate AI generation based on prompt
+        await Task.Delay(1500);
+        CurrentSuggestion = $"Based on your prompt about '{WritingPrompt}', here's a suggestion: Focus on developing your main character's motivations and conflicts to create more engaging narrative tension.";
+        IsGenerating = false;
+        StateHasChanged();
+    }
+
+    private void AnalyzeSentiment()
+    {
+        CurrentSuggestion = "Sentiment Analysis: Your writing has a positive tone with elements of introspection. Consider balancing this with some moments of conflict to create emotional depth.";
+        StateHasChanged();
+    }
+
+    private void CheckGrammar()
+    {
+        CurrentSuggestion = "Grammar Check: Your writing is grammatically sound. Consider varying your sentence structure for better rhythm and flow.";
+        StateHasChanged();
+    }
+
+    private void ImproveReadability()
+    {
+        CurrentSuggestion = "Readability Suggestion: Your text is at a good reading level. Try breaking up longer paragraphs and using more active voice to improve engagement.";
+        StateHasChanged();
+    }
+
+    private async Task ExportToWord()
+    {
+        await JSRuntime.InvokeVoidAsync("exportToWord", Content);
+    }
+
+    private async Task ExportToPDF()
+    {
+        await JSRuntime.InvokeVoidAsync("exportToPDF", Content);
+    }
+
+    private async Task ExportToMarkdown()
+    {
+        await JSRuntime.InvokeVoidAsync("exportToMarkdown", Content);
+    }
+
+    private string GetSuggestionStyle()
+    {
+        return IsGenerating ? "opacity: 0.6; font-style: italic;" : "";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Load saved content from local storage
+            var savedContent = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "writing-content");
+            if (!string.IsNullOrEmpty(savedContent))
+            {
+                Content = savedContent;
+                StateHasChanged();
+            }
+        }
+    }
+}

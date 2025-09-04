@@ -1,7 +1,99 @@
 ﻿@page "/"
+@inject NavigationManager NavigationManager
 
-<PageTitle>Home</PageTitle>
+<PageTitle>MindfulMuse - Creative Canvas</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="creative-canvas">
+    <header class="canvas-header">
+        <h1 class="display-4 text-center mb-4">🧠 MindfulMuse</h1>
+        <p class="lead text-center text-muted">Your AI-powered creative companion for writing, music, and design</p>
+    </header>
 
-Welcome to your new app.
+    <div class="canvas-modules">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Writing Module -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card writing-card" @onclick="NavigateToWriting">
+                        <div class="module-icon">
+                            <span class="fs-1">✍️</span>
+                        </div>
+                        <h3 class="module-title">Writing</h3>
+                        <p class="module-description">
+                            Craft stories, poems, and creative writing with AI assistance.
+                            Get suggestions, improve your prose, and bring your ideas to life.
+                        </p>
+                        <div class="module-features">
+                            <span class="badge bg-primary">AI Suggestions</span>
+                            <span class="badge bg-success">Rich Editor</span>
+                            <span class="badge bg-info">Export Options</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Music Module -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card music-card" @onclick="NavigateToMusic">
+                        <div class="module-icon">
+                            <span class="fs-1">🎵</span>
+                        </div>
+                        <h3 class="module-title">Music</h3>
+                        <p class="module-description">
+                            Create melodies, explore chord progressions, and compose music.
+                            Record your ideas and build harmonies from inspiration.
+                        </p>
+                        <div class="module-features">
+                            <span class="badge bg-warning">Audio Recording</span>
+                            <span class="badge bg-danger">Chord Builder</span>
+                            <span class="badge bg-secondary">Notation Display</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Module -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="module-card design-card" @onclick="NavigateToDesign">
+                        <div class="module-icon">
+                            <span class="fs-1">🎨</span>
+                        </div>
+                        <h3 class="module-title">Design</h3>
+                        <p class="module-description">
+                            Visualize ideas with mood boards, extract color palettes from images,
+                            and organize your creative inspiration.
+                        </p>
+                        <div class="module-features">
+                            <span class="badge bg-success">Color Palettes</span>
+                            <span class="badge bg-info">Mood Boards</span>
+                            <span class="badge bg-primary">Image Processing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="canvas-footer">
+        <div class="container text-center">
+            <p class="text-muted mb-0">
+                Powered by AI • Built with Blazor • Hosted on Azure
+            </p>
+        </div>
+    </footer>
+</div>
+
+@code {
+    private void NavigateToWriting()
+    {
+        NavigationManager.NavigateTo("/writing");
+    }
+
+    private void NavigateToMusic()
+    {
+        NavigationManager.NavigateTo("/music");
+    }
+
+    private void NavigateToDesign()
+    {
+        NavigationManager.NavigateTo("/design");
+    }
+}

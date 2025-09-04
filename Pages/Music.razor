@@ -1,0 +1,339 @@
+@page "/music"
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JSRuntime
+
+<PageTitle>MindfulMuse - Music</PageTitle>
+
+<div class="music-module">
+    <header class="module-header">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                <div>
+                    <h1 class="mb-1">🎵 Music Studio</h1>
+                    <p class="text-muted mb-0">Create and compose your musical ideas</p>
+                </div>
+                <button class="btn btn-outline-light" @onclick="NavigateHome">
+                    <i class="bi bi-house"></i> Home
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Audio Recording Section -->
+                <div class="recording-section mb-4">
+                    <div class="section-header">
+                        <h4>🎤 Audio Recording</h4>
+                        <small class="text-muted">Record up to 30 seconds of your musical ideas</small>
+                    </div>
+
+                    <div class="recording-controls">
+                        <div class="d-flex align-items-center gap-3">
+                            <button class="btn @GetRecordButtonClass()" @onclick="ToggleRecording">
+                                <i class="bi @GetRecordIcon()"></i>
+                                @GetRecordButtonText()
+                            </button>
+
+                            @if (!string.IsNullOrEmpty(AudioUrl))
+                            {
+                                <button class="btn btn-success" @onclick="PlayRecording">
+                                    <i class="bi bi-play-fill"></i> Play
+                                </button>
+                                <button class="btn btn-warning" @onclick="DownloadRecording">
+                                    <i class="bi bi-download"></i> Download
+                                </button>
+                            }
+
+                            <div class="recording-timer">
+                                <span class="badge bg-secondary">@RecordingTime</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="waveform-visualizer mt-3">
+                        <canvas id="waveformCanvas" width="800" height="100" style="width: 100%; border: 1px solid #dee2e6; border-radius: 5px;"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chord Builder Section -->
+                <div class="chord-builder-section mb-4">
+                    <div class="section-header">
+                        <h4>🎹 Chord Builder</h4>
+                        <small class="text-muted">Create chord progressions for your compositions</small>
+                    </div>
+
+                    <div class="chord-builder">
+                        <div class="chord-key-selector mb-3">
+                            <label class="form-label">Key:</label>
+                            <select class="form-select" @bind="SelectedKey">
+                                <option value="C">C Major</option>
+                                <option value="G">G Major</option>
+                                <option value="D">D Major</option>
+                                <option value="A">A Major</option>
+                                <option value="E">E Major</option>
+                                <option value="F">F Major</option>
+                                <option value="Bb">Bb Major</option>
+                                <option value="Eb">Eb Major</option>
+                                <option value="Ab">Ab Major</option>
+                                <option value="Db">Db Major</option>
+                                <option value="Gb">Gb Major</option>
+                                <option value="B">B Major</option>
+                            </select>
+                        </div>
+
+                        <div class="chord-progression">
+                            <h6>Chord Progression:</h6>
+                            <div class="progression-display">
+                                @foreach (var chord in ChordProgression)
+                                {
+                                    <span class="chord-badge badge bg-primary me-1">@chord</span>
+                                }
+                            </div>
+
+                            <div class="chord-buttons mt-3">
+                                <div class="btn-group me-2" role="group">
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => AddChord("I"))">I</button>
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => AddChord("ii"))">ii</button>
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => AddChord("iii"))">iii</button>
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => AddChord("IV"))">IV</button>
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => AddChord("V"))">V</button>
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => AddChord("vi"))">vi</button>
+                                    <button class="btn btn-outline-primary btn-sm" @onclick="@(() => AddChord("vii°"))">vii°</button>
+                                </div>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="ClearProgression">
+                                    <i class="bi bi-trash"></i> Clear
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Music Notation Display -->
+                <div class="notation-section">
+                    <div class="section-header">
+                        <h4>🎼 Music Notation</h4>
+                        <small class="text-muted">Visual representation of your chord progression</small>
+                    </div>
+
+                    <div class="notation-display">
+                        <div id="notationContainer" style="border: 1px solid #dee2e6; border-radius: 5px; padding: 1rem; min-height: 150px; background: white;">
+                            <!-- VexFlow notation will be rendered here -->
+                            <div class="text-center text-muted">
+                                <i class="bi bi-music-note-beamed"></i>
+                                <p>Notation will appear here when you build a chord progression</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- AI Music Assistant -->
+                <div class="ai-music-panel mb-3">
+                    <h5 class="panel-title">🎼 AI Music Assistant</h5>
+
+                    <div class="music-prompt-area">
+                        <textarea class="form-control" rows="4" placeholder="Describe the mood, style, or inspiration for your music..."
+                                  @bind="MusicPrompt" @bind:event="oninput"></textarea>
+                        <button class="btn btn-primary w-100 mt-2" @onclick="GenerateMusicSuggestion">
+                            Generate Music Idea
+                        </button>
+                    </div>
+
+                    <div class="music-suggestions mt-3">
+                        <h6>Music Suggestions:</h6>
+                        <div class="suggestion-item">
+                            @MusicSuggestion
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Export Options -->
+                <div class="export-panel">
+                    <h6>Export Options:</h6>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-outline-primary btn-sm" @onclick="ExportToMIDI">
+                            🎵 Export to MIDI
+                        </button>
+                        <button class="btn btn-outline-success btn-sm" @onclick="ExportToPDF">
+                            📄 Export Notation
+                        </button>
+                        <button class="btn btn-outline-info btn-sm" @onclick="ShareProgression">
+                            🔗 Share Progression
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Saved Progressions -->
+                <div class="saved-progressions mt-3">
+                    <h6>Saved Progressions:</h6>
+                    <div class="progression-list">
+                        @if (SavedProgressions.Any())
+                        {
+                            @foreach (var progression in SavedProgressions)
+                            {
+                                <div class="progression-item">
+                                    <small class="text-muted">@progression.Key:</small>
+                                    <div>
+                                        @foreach (var chord in progression.Chords)
+                                        {
+                                            <span class="badge bg-light text-dark me-1">@chord</span>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted small">No saved progressions yet</p>
+                        }
+                    </div>
+                    <button class="btn btn-outline-success btn-sm w-100 mt-2" @onclick="SaveCurrentProgression">
+                        💾 Save Current Progression
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private bool IsRecording { get; set; } = false;
+    private string RecordingTime { get; set; } = "00:00";
+    private string AudioUrl { get; set; } = "";
+    private string SelectedKey { get; set; } = "C";
+    private List<string> ChordProgression { get; set; } = new();
+    private string MusicPrompt { get; set; } = "";
+    private string MusicSuggestion { get; set; } = "Your music suggestions will appear here.";
+    private List<(string Key, List<string> Chords)> SavedProgressions { get; set; } = new();
+
+    private void NavigateHome()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    private async Task ToggleRecording()
+    {
+        if (!IsRecording)
+        {
+            await StartRecording();
+        }
+        else
+        {
+            await StopRecording();
+        }
+    }
+
+    private async Task StartRecording()
+    {
+        IsRecording = true;
+        RecordingTime = "00:00";
+        await JSRuntime.InvokeVoidAsync("startAudioRecording");
+        StateHasChanged();
+    }
+
+    private async Task StopRecording()
+    {
+        IsRecording = false;
+        var result = await JSRuntime.InvokeAsync<string>("stopAudioRecording");
+        if (!string.IsNullOrEmpty(result))
+        {
+            AudioUrl = result;
+        }
+        StateHasChanged();
+    }
+
+    private async Task PlayRecording()
+    {
+        await JSRuntime.InvokeVoidAsync("playAudio", AudioUrl);
+    }
+
+    private async Task DownloadRecording()
+    {
+        await JSRuntime.InvokeVoidAsync("downloadAudio", AudioUrl);
+    }
+
+    private string GetRecordButtonClass()
+    {
+        return IsRecording ? "btn-danger" : "btn-primary";
+    }
+
+    private string GetRecordIcon()
+    {
+        return IsRecording ? "bi-stop-fill" : "bi-record-circle";
+    }
+
+    private string GetRecordButtonText()
+    {
+        return IsRecording ? "Stop Recording" : "Start Recording";
+    }
+
+    private void AddChord(string chord)
+    {
+        ChordProgression.Add(chord);
+        StateHasChanged();
+        _ = RenderNotation();
+    }
+
+    private void ClearProgression()
+    {
+        ChordProgression.Clear();
+        StateHasChanged();
+    }
+
+    private async Task RenderNotation()
+    {
+        if (ChordProgression.Any())
+        {
+            await JSRuntime.InvokeVoidAsync("renderChordNotation", ChordProgression, SelectedKey);
+        }
+    }
+
+    private void GenerateMusicSuggestion()
+    {
+        if (string.IsNullOrWhiteSpace(MusicPrompt))
+            return;
+
+        MusicSuggestion = $"Based on '{MusicPrompt}': Consider a tempo of 120 BPM with a 4/4 time signature. Try layering acoustic guitar with subtle synth pads for atmosphere.";
+        StateHasChanged();
+    }
+
+    private async Task ExportToMIDI()
+    {
+        await JSRuntime.InvokeVoidAsync("exportToMIDI", ChordProgression, SelectedKey);
+    }
+
+    private async Task ExportToPDF()
+    {
+        await JSRuntime.InvokeVoidAsync("exportNotationToPDF");
+    }
+
+    private async Task ShareProgression()
+    {
+        var progressionString = string.Join("-", ChordProgression);
+        var shareUrl = $"https://mindfulmuse.com/share?key={SelectedKey}&progression={progressionString}";
+        await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", shareUrl);
+        // Show success message
+    }
+
+    private void SaveCurrentProgression()
+    {
+        if (ChordProgression.Any())
+        {
+            var name = $"{SelectedKey} Progression {SavedProgressions.Count + 1}";
+            SavedProgressions.Add((name, new List<string>(ChordProgression)));
+            StateHasChanged();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeAudioRecording");
+            await JSRuntime.InvokeVoidAsync("initializeVexFlow");
+        }
+    }
+}
