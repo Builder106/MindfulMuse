@@ -32,7 +32,7 @@ jobs:
           script: |
             const coredemo = require('@actions/core');
             return await coredemo.getIDToken();
-          result-encoding: string;
+          result-encoding: string
 
       # Setup .NET SDK
       - name: Setup .NET
