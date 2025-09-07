@@ -64,9 +64,6 @@ MindfulMuse/
 ├── Layout/               # Main layout components
 ├── wwwroot/              # Static assets and JS libraries
 ├── MindfulMuse.csproj    # Project configuration
-├── PLAN.md              # Detailed project planning
-├── project-setup.md     # Setup and conventions
-└── TODO.md              # Development roadmap
 ```
 
 ## 🔧 Configuration
