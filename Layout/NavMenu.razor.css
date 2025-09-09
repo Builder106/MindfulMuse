@@ -1,14 +1,35 @@
 .navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-toggler:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
 }
 
 .top-row {
-    min-height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    min-height: 4rem;
+    background: rgba(0,0,0,0.15);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white !important;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    letter-spacing: -0.5px;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .bi {
@@ -19,6 +40,7 @@
     margin-right: 0.75rem;
     top: -1px;
     background-size: cover;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
 }
 
 .bi-house-door-fill-nav-menu {
@@ -34,35 +56,66 @@
 }
 
 .nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+    font-size: 1rem;
+    padding-bottom: 0.75rem;
+    margin: 0 1rem;
 }
 
     .nav-item:first-of-type {
-        padding-top: 1rem;
+        padding-top: 1.5rem;
     }
 
     .nav-item:last-of-type {
-        padding-bottom: 1rem;
+        padding-bottom: 1.5rem;
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
+        color: rgba(255, 255, 255, 0.8);
+        border-radius: 12px;
+        height: 3.5rem;
         display: flex;
         align-items: center;
-        line-height: 3rem;
+        line-height: 3.5rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 0 1rem;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nav-item ::deep a::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        transition: left 0.5s ease;
     }
 
 .nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.37);
+    background: rgba(255,255,255,0.2);
     color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateX(4px);
+}
+
+.nav-item ::deep a.active::before {
+    left: 100%;
 }
 
 .nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.15);
     color: white;
+    transform: translateX(2px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-item ::deep a:hover::before {
+    left: 100%;
 }
 
 @media (min-width: 641px) {
@@ -77,7 +130,25 @@
 
     .nav-scrollable {
         /* Allow sidebar to scroll for tall menus */
-        height: calc(100vh - 3.5rem);
+        height: calc(100vh - 4rem);
         overflow-y: auto;
+        padding-bottom: 2rem;
+    }
+    
+    .nav-scrollable::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    .nav-scrollable::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-scrollable::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 2px;
+    }
+    
+    .nav-scrollable::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
     }
 }
