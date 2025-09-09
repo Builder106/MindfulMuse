@@ -28,6 +28,7 @@ jobs:
 
       - name: Generate ID token
         uses: actions/github-script@v8
+        id: idtoken
         with:
           script: |
             const coredemo = require('@actions/core');
