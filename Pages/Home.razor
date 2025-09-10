@@ -5,17 +5,8 @@
 
 <div class="creative-canvas">
     <header class="canvas-header">
-        <div class="container">
-            <h1 class="display-4 text-center mb-4">🧠 MindfulMuse</h1>
-            <p class="lead text-center">Your AI-powered creative companion for writing, music, and design</p>
-            <div class="text-center mt-4">
-                <div class="d-inline-flex align-items-center gap-3 px-4 py-2 rounded-pill" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);">
-                    <span class="badge bg-light text-dark">✨ AI-Powered</span>
-                    <span class="badge bg-light text-dark">🎨 Creative</span>
-                    <span class="badge bg-light text-dark">🚀 Innovative</span>
-                </div>
-            </div>
-        </div>
+        <h1 class="display-4 text-center mb-4">🧠 MindfulMuse</h1>
+        <p class="lead text-center text-muted">Your AI-powered creative companion for writing, music, and design</p>
     </header>
 
     <div class="canvas-modules">
@@ -25,20 +16,17 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="module-card writing-card" @onclick="NavigateToWriting">
                         <div class="module-icon">
-                            <div class="icon-wrapper">
-                                <span class="fs-1">✍️</span>
-                            </div>
+                            <span class="fs-1">✍️</span>
                         </div>
                         <h3 class="module-title">Writing</h3>
                         <p class="module-description">
-                            Unleash your creativity with our intelligent writing companion. Get AI-powered suggestions, 
-                            improve your prose, and transform ideas into compelling narratives.
+                            Craft stories, poems, and creative writing with AI assistance.
+                            Get suggestions, improve your prose, and bring your ideas to life.
                         </p>
                         <div class="module-features">
                             <span class="badge bg-primary">AI Suggestions</span>
-                            <span class="badge bg-success">Smart Editor</span>
+                            <span class="badge bg-success">Rich Editor</span>
                             <span class="badge bg-info">Export Options</span>
-                            <span class="badge bg-warning">Grammar Check</span>
                         </div>
                     </div>
                 </div>
@@ -47,20 +35,17 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="module-card music-card" @onclick="NavigateToMusic">
                         <div class="module-icon">
-                            <div class="icon-wrapper">
-                                <span class="fs-1">🎵</span>
-                            </div>
+                            <span class="fs-1">🎵</span>
                         </div>
-                        <h3 class="module-title">Music Studio</h3>
+                        <h3 class="module-title">Music</h3>
                         <p class="module-description">
-                            Compose beautiful music with intuitive tools. Build chord progressions, 
-                            record melodies, and bring your musical visions to life with professional notation.
+                            Create melodies, explore chord progressions, and compose music.
+                            Record your ideas and build harmonies from inspiration.
                         </p>
                         <div class="module-features">
                             <span class="badge bg-warning">Audio Recording</span>
                             <span class="badge bg-danger">Chord Builder</span>
                             <span class="badge bg-secondary">Notation Display</span>
-                            <span class="badge bg-info">MIDI Export</span>
                         </div>
                     </div>
                 </div>
@@ -69,20 +54,17 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="module-card design-card" @onclick="NavigateToDesign">
                         <div class="module-icon">
-                            <div class="icon-wrapper">
-                                <span class="fs-1">🎨</span>
-                            </div>
+                            <span class="fs-1">🎨</span>
                         </div>
-                        <h3 class="module-title">Design Studio</h3>
+                        <h3 class="module-title">Design</h3>
                         <p class="module-description">
-                            Transform visual concepts into reality. Extract stunning color palettes, 
-                            create inspiring mood boards, and organize your creative vision with powerful design tools.
+                            Visualize ideas with mood boards, extract color palettes from images,
+                            and organize your creative inspiration.
                         </p>
                         <div class="module-features">
                             <span class="badge bg-success">Color Palettes</span>
                             <span class="badge bg-info">Mood Boards</span>
                             <span class="badge bg-primary">Image Processing</span>
-                            <span class="badge bg-warning">AI Design Assistant</span>
                         </div>
                     </div>
                 </div>
@@ -92,95 +74,8 @@
 
     <footer class="canvas-footer">
         <div class="container text-center">
-            <div class="row align-items-center">
-                <div class="col-md-6 text-md-start text-center mb-3 mb-md-0">
-                    <p class="mb-0" style="opacity: 0.8;">
-                        <strong>MindfulMuse</strong> - Where creativity meets technology
-                    </p>
-                </div>
-                <div class="col-md-6 text-md-end text-center">
-                    <div class="d-inline-flex align-items-center gap-2 flex-wrap justify-content-center justify-content-md-end">
-                        <span class="badge bg-light text-dark">🤖 AI-Powered</span>
-                        <span class="badge bg-light text-dark">⚡ Blazor</span>
-                        <span class="badge bg-light text-dark">☁️ Azure</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
-
-<style>
-    .icon-wrapper {
-        position: relative;
-        display: inline-block;
-    }
-    
-    .icon-wrapper::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 80px;
-        height: 80px;
-        background: radial-gradient(circle, rgba(102, 126, 234, 0.1), transparent);
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        z-index: -1;
-        transition: all 0.3s ease;
-    }
-    
-    .module-card:hover .icon-wrapper::after {
-        width: 100px;
-        height: 100px;
-        background: radial-gradient(circle, rgba(102, 126, 234, 0.15), transparent);
-    }
-    
-    .canvas-header .badge {
-        font-size: 0.85rem;
-        padding: 0.5rem 1rem;
-        font-weight: 500;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-    }
-    
-    .canvas-footer .badge {
-        font-size: 0.75rem;
-        padding: 0.4rem 0.8rem;
-        font-weight: 500;
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-        opacity: 0.9;
-    }
-    
-    @media (max-width: 768px) {
-        .canvas-footer .d-inline-flex {
-            gap: 0.5rem;
-        }
-        
-        .canvas-footer .badge {
-            font-size: 0.7rem;
-            padding: 0.3rem 0.6rem;
-        }
-    }
-</style>
-
-@code {
-    private void NavigateToWriting()
-    {
-        NavigationManager.NavigateTo("/writing");
-    }
-
-    private void NavigateToMusic()
-    {
-        NavigationManager.NavigateTo("/music");
-    }
-
-    private void NavigateToDesign()
-    {
-        NavigationManager.NavigateTo("/design");
-    }
-}
+            <p class="text-muted mb-0">
+                Powered by AI • Built with Blazor • Hosted on Azure
             </p>
         </div>
     </footer>

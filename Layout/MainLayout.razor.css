@@ -2,49 +2,35 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
 }
 
 main {
     flex: 1;
-    background: #fafbfc;
 }
 
 .sidebar {
-    background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-    box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--neu-bg);
+    box-shadow: 12px 12px 24px var(--neu-shadow-dark), -12px -12px 24px var(--neu-shadow-light);
 }
 
 .top-row {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95));
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background-color: var(--neu-bg);
+    border-bottom: none;
     justify-content: flex-end;
-    height: 4rem;
+    height: 3.5rem;
     display: flex;
     align-items: center;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    box-shadow: 6px 6px 12px var(--neu-shadow-dark), -6px -6px 12px var(--neu-shadow-light);
 }
 
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
         margin-left: 1.5rem;
         text-decoration: none;
-        color: #667eea;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
     }
 
     .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-        background: rgba(102, 126, 234, 0.1);
-        color: #5a6fd8;
-        transform: translateY(-1px);
+        text-decoration: underline;
     }
 
     .top-row ::deep a:first-child {
@@ -77,7 +63,7 @@ main {
     .top-row {
         position: sticky;
         top: 0;
-        z-index: 100;
+        z-index: 1;
     }
 
     .top-row.auth ::deep a:first-child {
@@ -89,9 +75,5 @@ main {
     .top-row, article {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
-    }
-    
-    main {
-        margin-left: 0;
     }
 }

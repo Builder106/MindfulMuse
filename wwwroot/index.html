@@ -4,62 +4,27 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MindfulMuse - AI-Powered Creative Canvas</title>
-    <meta name="description" content="Your AI-powered creative companion for writing, music, and design. Transform ideas into reality with intelligent tools and seamless creativity.">
+    <title>MindfulMuse</title>
     <base href="/" />
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="MindfulMuse.styles.css" rel="stylesheet" />
-    
-    <!-- Theme color for mobile browsers -->
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
 </head>
 
-<body>
+<body class="neu">
     <div id="app">
-        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; z-index: 9999;">
-            <div style="text-align: center; color: white;">
-                <div style="margin-bottom: 2rem;">
-                    <span style="font-size: 4rem; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));">🧠</span>
-                </div>
-                <h1 style="font-family: 'Inter', sans-serif; font-weight: 700; font-size: 2.5rem; margin-bottom: 1rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">MindfulMuse</h1>
-                <svg class="loading-progress" style="width: 4rem; height: 4rem;">
-                    <defs>
-                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <circle r="40%" cx="50%" cy="50%" />
-                    <circle r="40%" cx="50%" cy="50%" />
-                </svg>
-                <div class="loading-progress-text" style="margin-top: 1rem; font-family: 'Inter', sans-serif; font-weight: 500;"></div>
-            </div>
-        </div>
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
     </div>
 
     <div id="blazor-error-ui">
-        <div style="display: flex; align-items: center; gap: 1rem;">
-            <span style="font-size: 1.5rem;">⚠️</span>
-            <div>
-                <strong>Oops! Something went wrong.</strong>
-                <p style="margin: 0.5rem 0 0 0; opacity: 0.9;">An unexpected error occurred. Please try refreshing the page.</p>
-            </div>
-        </div>
-        <a href="." class="reload" style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; color: white; font-weight: 500;">Reload</a>
-        <span class="dismiss">✕</span>
+        An unhandled error has occurred.
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
     </div>
 
     <!-- JavaScript Libraries for Creative Features -->
